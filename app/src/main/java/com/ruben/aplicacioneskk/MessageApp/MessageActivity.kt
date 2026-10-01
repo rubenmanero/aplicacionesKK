@@ -1,4 +1,4 @@
-package com.ruben.aplicacioneskk
+package com.ruben.aplicacioneskk.MessageApp
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import com.ruben.aplicacioneskk.R
 
 class MessageActivity : AppCompatActivity() {
 
@@ -45,6 +46,7 @@ class MessageActivity : AppCompatActivity() {
         val tvMessage = findViewById<TextView>(R.id.tvMessage)
         val btnSend = findViewById<Button>(R.id.btnSend)
         val etMessage = findViewById<EditText>(R.id.etMessage)
+
 
         var msg = intent.extras?.getString("extra_message").orEmpty()
         tvMessage.text = msg
