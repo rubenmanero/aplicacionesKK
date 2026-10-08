@@ -1,6 +1,7 @@
 package com.ruben.aplicacioneskk.ImcApp
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,8 @@ class ImcActivity : AppCompatActivity() {
     private var isMaleSelected: Boolean = false
     private var isFemaleSelected: Boolean = true
     private var currentWeight: Int = 70
+    private var currentAge: Int = 40
+    private var currentHeight: Int = 120
 
     private lateinit var viewMale: CardView
     private lateinit var viewFemale: CardView
@@ -23,6 +26,10 @@ class ImcActivity : AppCompatActivity() {
     private lateinit var tvWeight : TextView
     private lateinit var btnSubstractWeight: CardView
     private lateinit var btnAddWeight: CardView
+    private lateinit var tvAge : TextView
+    private lateinit var btnSubstractAge: CardView
+    private lateinit var btnAddAge: CardView
+    private lateinit var btnCalculate: CardView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,10 +45,15 @@ class ImcActivity : AppCompatActivity() {
         initComponents()
         initListeners()
         setWeight()
+        setAge()
     }
 
     private fun setWeight() {
         tvWeight.text = currentWeight.toString()
+    }
+
+    private fun setAge() {
+        tvAge.text = currentAge.toString()
     }
 
     private fun initComponents() {
@@ -52,6 +64,10 @@ class ImcActivity : AppCompatActivity() {
         tvWeight = findViewById(R.id.tvWeight)
         btnSubstractWeight = findViewById(R.id.btnSubstractWeight)
         btnAddWeight = findViewById(R.id.btnAddWeight)
+        tvAge = findViewById(R.id.tvAge)
+        btnSubstractAge = findViewById(R.id.btnSubstractAge)
+        btnAddAge = findViewById(R.id.btnAddAge)
+        btnCalculate = findViewById(R.id.btnCalculate)
     }
 
     private fun initListeners() {
@@ -59,8 +75,8 @@ class ImcActivity : AppCompatActivity() {
         viewFemale.setOnClickListener { setComponentColorFemale() }
         rsHeight.addOnChangeListener { _, value, _ ->
             val df = DecimalFormat("#")
-            val result = df.format(value)
-            tvHeight.text = "$result cm"
+            currentHeight = df.format(value).toInt()
+            tvHeight.text = "$currentHeight cm"
         }
         btnSubstractWeight.setOnClickListener {
             currentWeight--
@@ -70,6 +86,26 @@ class ImcActivity : AppCompatActivity() {
             currentWeight++
             setWeight()
         }
+        btnSubstractAge.setOnClickListener {
+            currentAge--
+            setAge()
+        }
+        btnAddAge.setOnClickListener {
+            currentAge++
+            setAge()
+        }
+        btnCalculate.setOnClickListener {
+            val result = calculateIMC()
+            Log.i("IMC",result.toString())
+            //navigateToResult(result)
+        }
+    }
+
+    private fun calculateIMC(): Double {
+        val df = DecimalFormat("#.##")
+        val result = currentWeight/Math.pow(currentHeight.toDouble()/100,2.0)
+        return df.format(result).toDouble()
+
     }
 
     private fun setComponentColorMale() {
