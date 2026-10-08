@@ -1,5 +1,6 @@
 package com.ruben.aplicacioneskk.ImcApp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -97,8 +98,14 @@ class ImcActivity : AppCompatActivity() {
         btnCalculate.setOnClickListener {
             val result = calculateIMC()
             Log.i("IMC",result.toString())
-            //navigateToResult(result)
+            navigateToResult(result)
         }
+    }
+
+    private fun navigateToResult(result: Double) {
+        var intent = Intent(this, ResultActivity::class.java)
+        intent.putExtra("extra_imc",result)
+        startActivity(intent)
     }
 
     private fun calculateIMC(): Double {

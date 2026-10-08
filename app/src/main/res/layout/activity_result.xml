@@ -36,7 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/tvResult"
@@ -62,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="26sp"
                 android:textColor="@color/white"
+                android:textAlignment="center"
                 tools:text="Normal"/>
 
         </LinearLayout>
