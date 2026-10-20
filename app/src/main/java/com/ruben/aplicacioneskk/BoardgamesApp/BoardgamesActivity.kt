@@ -53,7 +53,6 @@ class BoardgamesActivity : AppCompatActivity() {
 
     private fun showDialog() {
         val dialog = Dialog(this)
-        dialog.setContentView(R.layout.dialog_game)
 
     }
 
