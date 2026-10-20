@@ -1,5 +1,6 @@
 package com.ruben.aplicacioneskk.BoardgamesApp
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ruben.aplicacioneskk.BoardgamesApp.GameCategory.*
 import com.ruben.aplicacioneskk.R
 
@@ -29,6 +31,7 @@ class BoardgamesActivity : AppCompatActivity() {
     private lateinit var rvGames: RecyclerView
     private lateinit var categoriesAdapter: CategoriesAdapter
     private lateinit var gamesAdapter: GamesAdapter
+    private lateinit var fabAddGame: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,18 +43,33 @@ class BoardgamesActivity : AppCompatActivity() {
             insets
         }
         initComponents()
+        initListeners()
         initUI()
+    }
+
+    private fun initListeners() {
+        fabAddGame.setOnClickListener { showDialog() }
+    }
+
+    private fun showDialog() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_game)
+
     }
 
     private fun initUI() {
         categoriesAdapter = CategoriesAdapter(categories)
         rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvCategories.adapter = categoriesAdapter
+
         gamesAdapter = GamesAdapter(games)
+        rvGames.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rvGames.adapter = gamesAdapter
     }
 
     private fun initComponents() {
         rvCategories = findViewById(R.id.rvCategories)
         rvGames = findViewById(R.id.rvGames)
+        fabAddGame = findViewById(R.id.fabAddGame)
     }
 }
