@@ -2,6 +2,10 @@ package com.ruben.aplicacioneskk.BoardgamesApp
 
 import android.app.Dialog
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,7 +19,7 @@ import com.ruben.aplicacioneskk.R
 class BoardgamesActivity : AppCompatActivity() {
 
     private val categories: List<GameCategory> = listOf(Cooperative, Deckbuilding, Euro, LCG, Legacy)
-    private val games: List<Game> = listOf(
+    private val games: MutableList<Game> = mutableListOf(
         Game("Frostpunk", Cooperative),
         Game("Hero Realm", Deckbuilding),
         Game("Arkham Horror", LCG),
@@ -54,6 +58,31 @@ class BoardgamesActivity : AppCompatActivity() {
     private fun showDialog() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_game)
+
+        val etGame = dialog.findViewById<EditText>(R.id.etGame)
+        val rgCategories = dialog.findViewById<RadioGroup>(R.id.rgCategories)
+        val btnAddGame = dialog.findViewById<Button>(R.id.btnAddGame)
+
+        btnAddGame.setOnClickListener {
+            val currentGame = etGame.text.toString()
+            if(currentGame.isNotBlank()) {
+                val selectedId = rgCategories.checkedRadioButtonId
+                val selectedRadioButton: RadioButton = rgCategories.findViewById(selectedId)
+
+                val currentCategory: GameCategory = when(selectedRadioButton.text) {
+                    getString(R.string.dialog_cooperative_category) -> Cooperative
+                    getString(R.string.dialog_deckbuilding_category) -> Deckbuilding
+                    getString(R.string.dialog_euro_category) -> Euro
+                    getString(R.string.dialog_lcg_category) -> LCG
+                    else -> Legacy
+                }
+                games.add(Game(currentGame, currentCategory))
+                updateGames()
+                dialog.hide()
+            }
+        }
+
+        dialog.show()
 
     }
 
