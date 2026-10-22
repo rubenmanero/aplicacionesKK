@@ -81,9 +81,16 @@ class BoardgamesActivity : AppCompatActivity() {
                 dialog.hide()
             }
         }
-
         dialog.show()
+    }
 
+    private fun updateGames() {
+        gamesAdapter.notifyDataSetChanged()
+    }
+
+    private fun onGameSelected(position: Int) {
+        games[position].isSelected = !games[position].isSelected
+        updateGames()
     }
 
     private fun initUI() {
@@ -91,7 +98,7 @@ class BoardgamesActivity : AppCompatActivity() {
         rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvCategories.adapter = categoriesAdapter
 
-        gamesAdapter = GamesAdapter(games)
+        gamesAdapter = GamesAdapter(games) { position -> onGameSelected(position) }
         rvGames.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvGames.adapter = gamesAdapter
     }

@@ -1,6 +1,7 @@
 package com.ruben.aplicacioneskk.BoardgamesApp
 
 import android.content.res.ColorStateList
+import android.graphics.Paint
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
@@ -13,6 +14,16 @@ class GamesViewHolder(view: View): RecyclerView.ViewHolder(view) {
     val cbGame: CheckBox = view.findViewById(R.id.cbGame)
 
     fun render(game: Game) {
+        if (game.isSelected) {
+            tvGame.paintFlags = tvGame.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        } else {
+            tvGame.paintFlags = tvGame.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        }
+
+        cbGame.isClickable = false
+        cbGame.isChecked = game.isSelected
+
+
         tvGame.text = game.name
 
         val color = when(game.category){
