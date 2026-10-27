@@ -3,7 +3,7 @@
     android:layout_width="250dp"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:background="@color/bgapp_background_app"
+    android:background="#CC2D4993"
     android:orientation="vertical">
 
     <EditText
